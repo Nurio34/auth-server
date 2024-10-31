@@ -2,7 +2,7 @@ class AppError extends Error {
     constructor(message, statusCode) {
         super(message);
 
-        this.statusCode = 401;
+        this.statusCode = statusCode;
         this.status = `${
             statusCode.toString().startsWith("4") ? "fail" : "eror"
         }`;

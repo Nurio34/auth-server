@@ -10,4 +10,4 @@ mongoose
     .then(() => console.log("Successfull DB Connection"))
     .catch((e) => console.log(e));
 
-app.listen(PORT, () => console.log(`Server running at port ${PORT}`));
+app.listen(PORT, (e) => console.log(`Server running at port ${PORT}`));
