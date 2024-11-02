@@ -5,9 +5,8 @@ const cookieParser = require("cookie-parser");
 const AppError = require("./utils/appError");
 const error = require("./controller/error");
 
-//! *** ROUTERS ***
-const AuthRouter = require("./route/auth");
-//! ***************
+const SignupRouter = require("./route/signup");
+
 const app = express();
 
 app.use(
@@ -27,7 +26,7 @@ app.use(
     }),
 );
 
-app.use("/api/v1/auth", AuthRouter);
+app.use("/api/v1/signup", SignupRouter);
 
 app.all("*", (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server !`, 404));

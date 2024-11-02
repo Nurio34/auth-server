@@ -1,6 +1,7 @@
+const User = require("../../model/user");
+const AppError = require("../../utils/appError");
+
 const nodemailer = require("nodemailer");
-const AppError = require("../../../utils/appError");
-const User = require("../../../model/user");
 const gmail_auth_user = process.env.GMAIL_AUTH_USER;
 const gmail_auth_pass = process.env.GMAIL_AUTH_PASS;
 const mail_from = process.env.MAIL_FROM;
