@@ -95,6 +95,10 @@ UserSchema.pre("save", async function (next) {
     this.passwordConfirm = null;
 });
 
+UserSchema.methods.checkPassword = async function (password) {
+    return await bcrytp.compare(password, this.password);
+};
+
 const User = mongoose.model("User", UserSchema);
 
 module.exports = User;

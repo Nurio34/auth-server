@@ -1,5 +1,5 @@
-const User = require("../../model/user");
-const AppError = require("../../utils/appError");
+const User = require("../../../model/user");
+const AppError = require("../../../utils/appError");
 
 const checkIfEmailAlreadyRegistered = async (req, res, next) => {
     console.log("checkIfEmailAlreadyRegistered middleware ...");

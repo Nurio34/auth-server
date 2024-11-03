@@ -4,10 +4,8 @@ const jwt_expires_in = process.env.JWT_EXPIRES_IN;
 const cookies_expires_in = process.env.COKKIES_EXPIRES_IN;
 const node_env = process.env.NODE_ENV;
 
-const sendCookies = (req, res) => {
-    console.log("sendCookies function ...");
-
-    const user = req.user;
+const createCookieAndSend = (user, res, statusCode, message) => {
+    console.log("createCookieAndSend function");
 
     const token = jwt.sign({ id: user._id }, jwt_secret, {
         expiresIn: jwt_expires_in,
@@ -24,16 +22,11 @@ const sendCookies = (req, res) => {
 
     res.cookie("token", token, cookiesOption);
 
-    user.password = null;
-    user.passwordConfirm = null;
-    user.otp = null;
-
-    return res.status(200).json({
+    return res.status(statusCode).json({
         status: "success",
-        message: "Message",
+        message,
         token,
-        user,
     });
 };
 
-module.exports = sendCookies;
+module.exports = createCookieAndSend;

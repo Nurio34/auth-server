@@ -1,5 +1,5 @@
-const User = require("../../model/user");
-const AppError = require("../../utils/appError");
+const User = require("../model/user");
+const AppError = require("../utils/appError");
 
 const nodemailer = require("nodemailer");
 const gmail_auth_user = process.env.GMAIL_AUTH_USER;
@@ -8,11 +8,19 @@ const mail_from = process.env.MAIL_FROM;
 
 const sendOtpMail = async (req, res, next) => {
     console.log("sendOtpMail middleware ...");
+    const isResendOtp = req.route.path === "/resend-otp";
 
     const otp = req.user.otp;
     const to = req.user.email;
-    const subject = "OTP for mail verification";
-    const html = `
+    const subject = isResendOtp
+        ? "Your new OTP for mail verification"
+        : "OTP for mail verification";
+    const html = isResendOtp
+        ? `
+        <h1>Your new OTP is below</h1>
+        <p>${otp}</p>
+    `
+        : `
         <h1>Your OTP is below</h1>
         <p>${otp}</p>
     `;
@@ -34,6 +42,7 @@ const sendOtpMail = async (req, res, next) => {
 
     try {
         await transporter.sendMail(mailOptions);
+
         next();
     } catch (error) {
         next(new AppError("Verification email sending failed !", 500));
