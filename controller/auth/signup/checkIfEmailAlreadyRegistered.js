@@ -6,6 +6,10 @@ const checkIfEmailAlreadyRegistered = async (req, res, next) => {
 
     const { email } = req.body;
 
+    if (!email || email.trim("") === "") {
+        return next(new AppError("Please write your email !", 400));
+    }
+
     const check = await User.findOne({ email });
 
     if (check)

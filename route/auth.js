@@ -12,6 +12,8 @@ const checkEmail = require("../controller/auth/resendOtp/checkEmail");
 const updateUser = require("../controller/auth/resendOtp/updateUser");
 const login = require("../controller/auth/login");
 const logout = require("../controller/auth/logout");
+const checkIfAccountExists = require("../controller/auth/forgetPassword/checkIfAccountExists");
+const resetPassword = require("../controller/auth/resetPassword");
 
 router.post(
     "/signup",
@@ -40,5 +42,16 @@ router.post(
 router.post("/login", catchAsync(login));
 
 router.post("/logout", logout);
+
+router.post(
+    "/forget-password",
+    catchAsync(checkIfAccountExists),
+    createOtp,
+    catchAsync(updateUser),
+    catchAsync(sendOtpMail),
+    sendCookies,
+);
+
+router.post("/reset-password", resetPassword);
 
 module.exports = router;

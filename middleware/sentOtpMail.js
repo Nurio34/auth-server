@@ -9,11 +9,17 @@ const mail_from = process.env.MAIL_FROM;
 const sendOtpMail = async (req, res, next) => {
     console.log("sendOtpMail middleware ...");
     const isResendOtp = req.route.path === "/resend-otp";
+    const isForgetPasswordOtp = req.route.path === "/forget-password";
 
-    const otp = req.user.otp;
+    const otp = isForgetPasswordOtp ? req.user.resetPasswordOtp : req.user.otp;
+    console.log({ otp });
+
     const to = req.user.email;
+
     const subject = isResendOtp
         ? "Your new OTP for mail verification"
+        : isForgetPasswordOtp
+        ? "Your OTP for forgotten password"
         : "OTP for mail verification";
     const html = isResendOtp
         ? `
@@ -26,7 +32,7 @@ const sendOtpMail = async (req, res, next) => {
     `;
 
     const transporter = nodemailer.createTransport({
-        service: "Gmail",
+        service: "gmail",
         auth: {
             user: gmail_auth_user,
             pass: gmail_auth_pass,
@@ -45,8 +51,16 @@ const sendOtpMail = async (req, res, next) => {
 
         next();
     } catch (error) {
+        console.log(error);
+
         next(new AppError("Verification email sending failed !", 500));
-        await User.findByIdAndDelete(req.user._id);
+
+        if (isForgetPasswordOtp)
+            return await User.findByIdAndUpdate(req.user._id, {
+                otp: null,
+                otpExpires: null,
+            });
+        return await User.findByIdAndDelete(req.user._id);
     }
 };
 
