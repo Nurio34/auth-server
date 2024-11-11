@@ -1,5 +1,5 @@
-const User = require("../model/user");
-const AppError = require("../utils/appError");
+const User = require("../../model/user");
+const AppError = require("../../utils/appError");
 
 const nodemailer = require("nodemailer");
 const gmail_auth_user = process.env.GMAIL_AUTH_USER;
@@ -12,7 +12,6 @@ const sendOtpMail = async (req, res, next) => {
     const isForgetPasswordOtp = req.route.path === "/forget-password";
 
     const otp = isForgetPasswordOtp ? req.user.resetPasswordOtp : req.user.otp;
-    console.log({ otp });
 
     const to = req.user.email;
 

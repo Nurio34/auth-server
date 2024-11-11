@@ -1,6 +1,7 @@
 const vjs = require("validator");
 const User = require("../../../model/user");
 const AppError = require("../../../utils/appError");
+const createCookieAndSend = require("../../../utils/createCookieAndSend");
 
 const resetPassword = async (req, res, next) => {
     const { email, otp, newPassword, newPasswordConfirm } = req.body;
@@ -20,13 +21,14 @@ const resetPassword = async (req, res, next) => {
 
     if (otp !== user.resetPasswordOtp)
         return next(new AppError("Incorrect OTP !", 400));
-    console.log({ newPassword, newPasswordConfirm });
 
     user.password = newPassword;
     user.passwordConfirm = newPasswordConfirm;
-
+    user.resetPasswordOtp = null;
+    user.resetPasswordOtpExpires = null;
     await user.save();
-    console.log(user);
+
+    createCookieAndSend(user, res, 200, "New password set successfully ...");
 };
 
 module.exports = resetPassword;

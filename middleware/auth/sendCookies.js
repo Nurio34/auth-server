@@ -1,4 +1,4 @@
-const createCookieAndSend = require("../utils/createCookieAndSend");
+const createCookieAndSend = require("../../utils/createCookieAndSend");
 
 const sendCookies = (req, res) => {
     const user = req.user;

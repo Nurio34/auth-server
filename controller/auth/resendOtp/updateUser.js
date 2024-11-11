@@ -10,7 +10,6 @@ const updateUser = async (req, res, next) => {
     if (isForgetPasswordOtp) {
         const resetPasswordOtp = req.resetPasswordOtp;
         const resetPasswordOtpExpires = req.resetPasswordOtpExpires;
-        console.log({ resetPasswordOtp, resetPasswordOtpExpires });
 
         const updatedUser = await User.findByIdAndUpdate(
             user._id,

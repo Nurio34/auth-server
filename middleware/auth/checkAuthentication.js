@@ -1,7 +1,7 @@
-const AppError = require("../utils/appError");
+const AppError = require("../../utils/appError");
 const jwt = require("jsonwebtoken");
 const jwt_secret = process.env.JWT_SECRET;
-const User = require("../model/user");
+const User = require("../../model/user");
 
 const checkAuthentication = async (req, res, next) => {
     console.log("checkAuthentication middleware");
