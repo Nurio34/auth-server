@@ -24,7 +24,6 @@ const updateUser = async (req, res, next) => {
     } else {
         const otp = req.otp;
         const otpExpires = req.otpExpires;
-        console.log({ otp, otpExpires });
 
         const updatedUser = await User.findByIdAndUpdate(
             user._id,
