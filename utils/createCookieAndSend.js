@@ -11,13 +11,22 @@ const createCookieAndSend = (user, res, statusCode, message) => {
         expiresIn: jwt_expires_in,
     });
 
+    // const cookiesOption = {
+    //     expires: new Date(
+    //         Date.now() + cookies_expires_in * 24 * 60 * 60 * 1000,
+    //     ),
+    //     httpOnly: true,
+    //     secure: node_env === "production",
+    //     samSite: node_env === "production" ? "none" : "Lax",
+    // };
+
     const cookiesOption = {
         expires: new Date(
             Date.now() + cookies_expires_in * 24 * 60 * 60 * 1000,
         ),
         httpOnly: true,
-        secure: node_env === "production",
-        samSite: node_env === "production" ? "none" : "Lax",
+        secure: true,
+        sameSite: "none",
     };
 
     res.cookie("token", token, cookiesOption);
@@ -26,6 +35,7 @@ const createCookieAndSend = (user, res, statusCode, message) => {
         status: "success",
         message,
         token,
+        user,
     });
 };
 
