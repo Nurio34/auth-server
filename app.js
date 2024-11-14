@@ -21,7 +21,11 @@ app.use(cookieParser());
 
 app.use(
     cors({
-        origin: ["http://localhost:3000"],
+        origin: [
+            "http://localhost:3000",
+            "https://auth-nurio34s-projects.vercel.app",
+            "https://auth-beta-dusky.vercel.app",
+        ],
         credentials: true,
     }),
 );

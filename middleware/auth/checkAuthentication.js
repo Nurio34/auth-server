@@ -5,6 +5,7 @@ const User = require("../../model/user");
 
 const checkAuthentication = async (req, res, next) => {
     console.log("checkAuthentication middleware");
+    console.log(req.headers);
 
     const authHeader = req.headers.authorization;
     const cookiesToken = req.cookies["auth-token"];
