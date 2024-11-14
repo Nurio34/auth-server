@@ -7,7 +7,7 @@ const checkAuthentication = async (req, res, next) => {
     console.log("checkAuthentication middleware");
 
     const authHeader = req.headers.authorization;
-    const cookiesToken = req.cookies.token;
+    const cookiesToken = req.cookies["auth-token"];
 
     if (!cookiesToken && !authHeader)
         return next(new AppError("There is not a token !", 401));

@@ -7,6 +7,8 @@ const node_env = process.env.NODE_ENV;
 const createCookieAndSend = (user, res, statusCode, message) => {
     console.log("createCookieAndSend function");
 
+    const isForgetPassword = res.isForgetPassword;
+
     const token = jwt.sign({ id: user._id }, jwt_secret, {
         expiresIn: jwt_expires_in,
     });
@@ -20,12 +22,25 @@ const createCookieAndSend = (user, res, statusCode, message) => {
         samSite: node_env === "production" ? "none" : "Lax",
     };
 
-    res.cookie("token", token, cookiesOption);
+    res.cookie("auth-token", token, cookiesOption);
+
+    const userToSendClient = isForgetPassword
+        ? null
+        : {
+              id: user._id,
+              username: user.username,
+              email: user.email,
+              isVerified: user.isVerified,
+              createdAt: user.createdAt,
+          };
 
     return res.status(statusCode).json({
         status: "success",
         message,
         token,
+        user: userToSendClient,
+        otpExpires: user.otpExpires,
+        resetPasswordOtpExpires: user.resetPasswordOtpExpires,
     });
 };
 

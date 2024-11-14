@@ -3,6 +3,10 @@ const createCookieAndSend = require("../../utils/createCookieAndSend");
 const sendCookies = (req, res) => {
     const user = req.user;
 
+    const isForgetPassword = req.route.path === "/forget-password";
+    res.isForgetPassword = isForgetPassword;
+    console.log({ isForgetPassword });
+
     user.password = null;
     user.passwordConfirm = null;
     user.otp = null;
