@@ -25,7 +25,6 @@ app.use(
             "http://localhost:3000",
             "https://auth-nurio34s-projects.vercel.app",
             "https://auth-beta-dusky.vercel.app",
-            "https://auth-l0hj2io6n-nurio34s-projects.vercel.app",
         ],
         credentials: true,
     }),
