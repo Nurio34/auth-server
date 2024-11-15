@@ -5,7 +5,6 @@ const sendCookies = (req, res) => {
 
     const isForgetPassword = req.route.path === "/forget-password";
     res.isForgetPassword = isForgetPassword;
-    console.log({ isForgetPassword });
 
     user.password = null;
     user.passwordConfirm = null;

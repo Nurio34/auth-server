@@ -9,7 +9,6 @@ const createCookieAndSend = (user, res, statusCode, message) => {
 
     const isForgetPassword = res.isForgetPassword;
     const isResetPassword = res.isResetPassword;
-    console.log({ isResetPassword });
 
     const token = jwt.sign({ id: user._id }, jwt_secret, {
         expiresIn: jwt_expires_in,
