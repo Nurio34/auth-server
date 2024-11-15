@@ -28,6 +28,9 @@ const resetPassword = async (req, res, next) => {
     user.resetPasswordOtpExpires = null;
     await user.save();
 
+    const isResetPassword = req.route.path === "/reset-password";
+    res.isResetPassword = isResetPassword;
+
     createCookieAndSend(user, res, 200, "New password set successfully ...");
 };
 

@@ -8,6 +8,8 @@ const createCookieAndSend = (user, res, statusCode, message) => {
     console.log("createCookieAndSend function");
 
     const isForgetPassword = res.isForgetPassword;
+    const isResetPassword = res.isResetPassword;
+    console.log({ isResetPassword });
 
     const token = jwt.sign({ id: user._id }, jwt_secret, {
         expiresIn: jwt_expires_in,
@@ -33,27 +35,25 @@ const createCookieAndSend = (user, res, statusCode, message) => {
 
     res.cookie("auth-token", token, cookiesOption);
 
-    const userToSendClient = isForgetPassword
-        ? null
-        : {
-              id: user._id,
-              username: user.username,
-              email: user.email,
-              isVerified: user.isVerified,
-              createdAt: user.createdAt,
-          };
+    const userToSendClient =
+        isForgetPassword || isResetPassword
+            ? null
+            : {
+                  id: user._id,
+                  username: user.username,
+                  email: user.email,
+                  isVerified: user.isVerified,
+                  createdAt: user.createdAt,
+              };
 
     return res.status(statusCode).json({
         status: "success",
         message,
         token,
-<<<<<<< HEAD
         user: userToSendClient,
         otpExpires: user.otpExpires,
         resetPasswordOtpExpires: user.resetPasswordOtpExpires,
-=======
         user,
->>>>>>> 61971ce356da84a4b3ab531866767fb3853968e0
     });
 };
 
