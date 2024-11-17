@@ -6,9 +6,9 @@ const sendCookies = (req, res) => {
     const isForgetPassword = req.route.path === "/forget-password";
     res.isForgetPassword = isForgetPassword;
 
-    user.password = null;
-    user.passwordConfirm = null;
-    user.otp = null;
+    user.password = "";
+    user.passwordConfirm = "";
+    user.otp = "";
 
     const isResendOtp = req.route.path === "/resend-otp";
 
